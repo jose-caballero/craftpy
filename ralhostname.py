@@ -4,7 +4,7 @@ import re
 import sys
 import socket
 
-from sysadmin.myshell import run
+from craftpy.shell import run
 
 
 # ============================================================================== 
