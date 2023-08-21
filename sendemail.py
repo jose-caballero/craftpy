@@ -3,7 +3,15 @@
 import socket
 from sysadmin.myshell import run, remote_run
 
-def sendemail(f, subject, adddress):
+
+#
+# FIXME !!
+# remove all hardcode variables (hostnames, email addresses, ...)
+# and make them input parameters
+#
+
+
+def sendemail_from_file(f, subject, adddress):
     """
     :param f: filename with email body
     :param subject: email subject
@@ -21,3 +29,15 @@ def sendemail(f, subject, adddress):
         remote_run(cmd, 'lcgui06.gridpp.rl.ac.uk', 'josecaballero')
         cmd = "rm -f /tmp/email_body"
         remote_run(cmd, 'lcgui06.gridpp.rl.ac.uk', 'josecaballero')
+
+def send_email(subject, body):
+    sender = f'root@{socket.gethostname()}'
+    to = 'ESCPSCSGridServicesteam@stfc.ac.uk'
+    message = MIMEText(body)
+    message['subject'] = subject
+    message['From'] = sender
+    message['To'] = to
+    to = [to]
+    server = smtplib.SMTP("localhost")
+    server.sendmail(sender, to, message.as_string())
+    server.close()
